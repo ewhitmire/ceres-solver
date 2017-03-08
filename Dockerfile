@@ -1,4 +1,7 @@
-FROM ubuntu:16.04
+FROM phusion/baseimage:0.9.19
+
+# Use baseimage-docker's init system.
+CMD ["/sbin/my_init"]
 
 
 # Install apt-getable dependencies
@@ -19,8 +22,5 @@ RUN \
     make test && \
     make install
 
-
-
-
-# GENERIC
-WORKDIR /
+# Clean up APT when done.
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
